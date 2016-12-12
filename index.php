@@ -44,6 +44,10 @@ while ($row = $result->fetchArray()) {
            "sem":"'.$row["Year"].'",
            "br":"'.$row["Branch"].'"},';
 }
+// $result = $dbs->query('SELECT * FROM sqlite_master ');
+// while ($a = $result->fetchArray()) {
+//   echo "<br>";echo "<br>";var_dump($a);echo "<br>";
+// }
 
 $json = array();
     $bus = array(
