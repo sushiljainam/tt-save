@@ -26,13 +26,23 @@ $postdata = json_decode('
   {"dur":"2","p":"III","b":{"3":true,"5":true,"7":true},"sem":"2","br":"ce","r":"room2","s":"sub3"},
   {"dur":"2","p":"III","b":{"2":true,"3":true,"5":true,"7":true},"sem":"2","br":"ce","r":"room2","s":"sub1","d":"Wednesday","t":"tea2"}]}');
 
+//{"dur":"3","p":"II","d":"Tuesday","b":{"1":true,"2":true},"s":"sub3","t":"tea3","r":"room1","sem":"3","br":"me"}
+
 $dbs = new sqlite3('databasev1.db');
 // $dbhandle = $dbs.open('databasev1.db');
 var_dump($dbs);
-$result = $dbs->query('SELECT * FROM maintable LIMIT 1');
+$result = $dbs->query('SELECT * FROM maintable');
 // new SQLiteDatabase
 while ($row = $result->fetchArray()) {
-    var_dump($row);//Day,Period,Duration,Batch,Subject,Room,Teacher_id,Year,Branch
+    // var_dump($row);//Day,Period,Duration,Batch,Subject,Room,Teacher_id,Year,Branch
+    echo '{"dur":"'.$row["Duration"].'",
+           "p":"'.$row["Period"].'",
+           "d":"'.$row["Day"].'",
+           "s":"'.$row["Subject"].'",
+           "t":"'.$row["Teacher_id"].'",
+           "r":"'.$row["Room"].'",
+           "sem":"'.$row["Year"].'",
+           "br":"'.$row["Branch"].'"},';
 }
 
 $json = array();
