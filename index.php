@@ -12,7 +12,7 @@ $json = array();
     );
     array_push($json, $bus);
 
-$jsonstring = json_encode($bus);
+$jsonstring = json_encode($json);
 echo $jsonstring;
 
 ?>
