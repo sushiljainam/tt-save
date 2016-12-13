@@ -85,7 +85,7 @@ function filterTid($dbTeacherString)
   //string "RSS" -> string "RSS"
   //to parse and filter
   $viewTeacherObject = explode('+',$dbTeacherString);
-  if (sizeof($viewTeacherObject) == 1) {
+  if (count($viewTeacherObject) == 1) {
     return $dbTeacherString;
   } else {
     return $viewTeacherObject;
@@ -93,12 +93,34 @@ function filterTid($dbTeacherString)
 }
 function filterBatch($dbBatchString)
 {
-  $viewBatchObject = $dbBatchString;
+  $viewBatchObjTemp = $dbBatchString;
   //string "8CS1+CS2" -> {"0":true,"1":true}
   //string "8CS2" -> {"1":true}
   //string "8CS" -> {}
   //need to parse
-  $viewBatchObject = explode('+',substr($viewBatchObject,1));
-  
+
+  //"8CS1+CS2" "8CS2" "8CS"
+  $viewBatchObjTemp = explode('+',substr($viewBatchObjTemp,1));
+  //["CS1","CS2"] ["CS2"] ["CS"]
+  $viewBatchObject = new ArrayObject();
+  for ($i=0; $i < count($viewBatchObjTemp); $i++) {
+    if (substr($viewBatchObjTemp[$i],2) != '') {
+      $viewBatchObjTemp[$i] = substr($viewBatchObjTemp[$i],2);
+      //["1","2"] ["2"]
+      $viewBatchObjTemp[$i] = (intval($viewBatchObjTemp[$i])) - 1;
+      //[0,1] [1]
+      // $viewBatchObject->append(strval($viewBatchObjTemp[$i]) => true);
+      $viewBatchObject[strval($viewBatchObjTemp[$i])] = true;
+    } else {
+      $viewBatchObjTemp[$i] = "";
+      // return json_decode ("{}");
+      return new ArrayObject();
+    }
+  }
+  //["1","2"] ["2"] [""]
+  //[1,2] [2] {}
+  //{0:true,1:true} {1:true} --
+  //-- -- --
+
   return $viewBatchObject;
 }
