@@ -121,6 +121,7 @@ function filterBatch($dbBatchString)
       //[0,1] [1]
       // $viewBatchObject->append(strval($viewBatchObjTemp[$i]) => true);
       $viewBatchObject[strval($viewBatchObjTemp[$i])] = true;
+      //{0:true,1:true} {1:true} --
     } else {
       $viewBatchObjTemp[$i] = "";
       // return json_decode ("{}");
