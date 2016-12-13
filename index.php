@@ -41,10 +41,11 @@ while ($row = $result->fetchArray()) {
       "p"     =>  $row["Period"],
       "d"     =>  $row["Day"],
       "s"     =>  $row["Subject"],
-      "t"     =>  $row["Teacher_id"],
+      "t"     =>  filterTid($row["Teacher_id"]),
       "r"     =>  $row["Room"],
       "sem"   =>  $row["Year"],
       "br"    =>  $row["Branch"],
+      "b"     =>  filterBatch($row["Batch"]),
     );
     // '{"dur":"'.$row["Duration"].'",'.
     //        '"p":"'.$row["Period"].'",'.
@@ -75,3 +76,29 @@ $jsonstring = json_encode($json);
 echo $jsonstring;
 
 ?>
+<?php
+function filterTid($dbTeacherString)
+{
+  // $viewTeacherObject = $dbTeacherString;
+
+  //string "RSS+GF9" -> array ["RSS","GF9"];
+  //string "RSS" -> string "RSS"
+  //to parse and filter
+  $viewTeacherObject = explode('+',$dbTeacherString);
+  if (sizeof($viewTeacherObject) == 1) {
+    return $dbTeacherString;
+  } else {
+    return $viewTeacherObject;
+  }
+}
+function filterBatch($dbBatchString)
+{
+  $viewBatchObject = $dbBatchString;
+  //string "8CS1+CS2" -> {"0":true,"1":true}
+  //string "8CS2" -> {"1":true}
+  //string "8CS" -> {}
+  //need to parse
+  $viewBatchObject = explode('+',substr($viewBatchObject,1));
+  
+  return $viewBatchObject;
+}
