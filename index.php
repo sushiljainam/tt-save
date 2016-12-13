@@ -93,19 +93,29 @@ function filterTid($dbTeacherString)
 }
 function filterBatch($dbBatchString)
 {
+  $branchKeyLength = 2; //assumed for like CS,ME,CE,EE,PI,PE
+  //may change when class or section are like A,B,C,D,E,F   :1
+  //OR IF IT'S LIKE 8CS1+8CS2   :3
+
+  $startSemCharLength = 1; //assumed for like 8CS1+CS2,1A1+A2,2B3+B4    :start char 8|1|2
+  //may change when IT'S LIKE
+  //CS1+CS2,A1+A2,B3+B4       :0
+  //8CS1+8CS2,1A1+1A2,2B3+2B4 :0
+
   $viewBatchObjTemp = $dbBatchString;
+  //input             -> output
   //string "8CS1+CS2" -> {"0":true,"1":true}
-  //string "8CS2" -> {"1":true}
-  //string "8CS" -> {}
+  //string "8CS2"     -> {"1":true}
+  //string "8CS"      -> {}
   //need to parse
 
   //"8CS1+CS2" "8CS2" "8CS"
-  $viewBatchObjTemp = explode('+',substr($viewBatchObjTemp,1));
+  $viewBatchObjTemp = explode('+',substr($viewBatchObjTemp,$startSemCharLength));
   //["CS1","CS2"] ["CS2"] ["CS"]
   $viewBatchObject = new ArrayObject();
   for ($i=0; $i < count($viewBatchObjTemp); $i++) {
-    if (substr($viewBatchObjTemp[$i],2) != '') {
-      $viewBatchObjTemp[$i] = substr($viewBatchObjTemp[$i],2);
+    if (substr($viewBatchObjTemp[$i],$branchKeyLength) != '') {
+      $viewBatchObjTemp[$i] = substr($viewBatchObjTemp[$i],$branchKeyLength);
       //["1","2"] ["2"]
       $viewBatchObjTemp[$i] = (intval($viewBatchObjTemp[$i])) - 1;
       //[0,1] [1]
