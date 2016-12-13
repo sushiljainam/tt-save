@@ -30,20 +30,33 @@ $postdata = json_decode('
 
 $dbs = new sqlite3('databasev1.db');
 // $dbhandle = $dbs.open('databasev1.db');
-var_dump($dbs);
+// var_dump($dbs);
 $result = $dbs->query('SELECT * FROM maintable');
 // new SQLiteDatabase
+$resultFr = array();
 while ($row = $result->fetchArray()) {
     // var_dump($row);//Day,Period,Duration,Batch,Subject,Room,Teacher_id,Year,Branch
-    echo '{"dur":"'.$row["Duration"].'",
-           "p":"'.$row["Period"].'",
-           "d":"'.$row["Day"].'",
-           "s":"'.$row["Subject"].'",
-           "t":"'.$row["Teacher_id"].'",
-           "r":"'.$row["Room"].'",
-           "sem":"'.$row["Year"].'",
-           "br":"'.$row["Branch"].'"},';
+    $rowFr =  array(
+      "dur"   =>  $row["Duration"],
+      "p"     =>  $row["Period"],
+      "d"     =>  $row["Day"],
+      "s"     =>  $row["Subject"],
+      "t"     =>  $row["Teacher_id"],
+      "r"     =>  $row["Room"],
+      "sem"   =>  $row["Year"],
+      "br"    =>  $row["Branch"],
+    );
+    // '{"dur":"'.$row["Duration"].'",'.
+    //        '"p":"'.$row["Period"].'",'.
+    //        '"d":"'.$row["Day"].'",'.
+    //        '"s":"'.$row["Subject"].'",'.
+    //        '"t":"'.$row["Teacher_id"].'",'.
+    //        '"r":"'.$row["Room"].'",'.
+    //        '"sem":"'.$row["Year"].'",'.
+    //        '"br":"'.$row["Branch"].'"},';
+           array_push($resultFr,$rowFr);
 }
+// var_dump();
 // $result = $dbs->query('SELECT * FROM sqlite_master ');
 // while ($a = $result->fetchArray()) {
 //   echo "<br>";echo "<br>";var_dump($a);echo "<br>";
@@ -51,14 +64,14 @@ while ($row = $result->fetchArray()) {
 
 $json = array();
     $bus = array(
-        'success' => false,
-        'rTL' => false,
-        'rcvd52' => $postdata,
-        'rcvd53' => $_SERVER,
+        'success' => true,
+        // 'rcvd52' => $postdata,
+        // 'rcvd53' => $_SERVER,
+        'rcvd54' => $resultFr,
     );
     array_push($json, $bus);
 
 $jsonstring = json_encode($json);
-// echo $jsonstring;
+echo $jsonstring;
 
 ?>
