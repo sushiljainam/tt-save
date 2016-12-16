@@ -38,4 +38,14 @@ roomGroup,deptt(teacher)
 
 :all keys are case sensitive
 */
+
+
+public function dbAction($aType,$entity,$params)
+{
+  /*
+  $aType: get/upsert
+  $entity: course/branch/yearCount/semCount/batchCount/room/teacher/subject/rows
+  */
+
+}
 ?>
