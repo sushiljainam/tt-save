@@ -61,7 +61,7 @@ $tbl_configs = 'configs';
 getCourses()                    : select *|ID,key,abbr,fullName from $tbl_configs where `type` = 'course'
 getBranches(course)             : select * from $tbl_configs where `type` = 'courseBranch' and `parentID` = {select ID from $tbl_configs where `type` = 'course' and `key`= $course}; $course='bTech'
 :: select ID,key,abbr,fullName from configs where `type` = 'courseBranch' and `parentID` = (select ID from configs where `type` = 'course' and `key`= 'bTech')
-getYearCount(course)
+getYearCount(course)            : select ID,key,abbr,fullName from configs where type = 'courseYearCount' and parentID = (select ID from configs where type = 'course' and key= 'bTech')
 getSemCount(course)
 getBatchCount(course,branch)
 getRooms(*)
