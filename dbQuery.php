@@ -46,6 +46,13 @@ public function dbAction($aType,$entity,$params)
   $aType: get/upsert
   $entity: course/branch/yearCount/semCount/batchCount/room/teacher/subject/rows
   */
+  $sqliteDBFile = 'databasev1.db';
+  ini_set("allow_url_fopen", true);
+  //check php version and sqlite3 library installation
+  $db = new sqlite3($sqliteDBFile);
+
+
+
 
 }
 ?>
