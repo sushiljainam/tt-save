@@ -55,4 +55,22 @@ public function dbAction($aType,$entity,$params)
 
 
 }
+
+/*
+$tbl_configs = 'configs';
+getCourses()                    : select *|ID,key,abbr,fullName from $tbl_configs where `type` = 'course'
+getBranches(course)             : select * from $tbl_configs where `type` = 'courseBranch' and `parentID` = {select ID from $tbl_configs where `type` = 'course' and `key`= $course}; $course='bTech'
+:: select ID,key,abbr,fullName from configs where `type` = 'courseBranch' and `parentID` = (select ID from configs where `type` = 'course' and `key`= 'bTech')
+getYearCount(course)
+getSemCount(course)
+getBatchCount(course,branch)
+getRooms(*)
+getRooms(*roomGroup)
+getTeachers(*)
+getTeachers(*deptt)
+getSubjects(course,branch,sem)
+getRows(*)
+getRows(*config) config: (userType,teacher.key | userType,room.key | userType,course.key,branch.key,sem) userType:[t|r|s]
+...
+*/
 ?>
